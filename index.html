@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f7f8f5" />
+    <meta
+      name="description"
+      content="A calmer way to track personal spending, manage expenses, and explore sample AI money insights."
+    />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <title>SmartSpend AI — Your money, in focus</title>
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" href="icon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+        <a class="brand" href="#" aria-label="SmartSpend AI home">
+          <span class="brand-mark"><span></span><span></span><span></span></span>
+          <span class="brand-name">smartspend<span>AI</span></span>
+        </a>
+
+        <div class="workspace-label">WORKSPACE</div>
+        <nav class="main-nav">
+          <a class="nav-link active" href="#overview" data-page="Overview">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="2"></rect><rect x="13" y="3" width="8" height="5" rx="2"></rect><rect x="13" y="10" width="8" height="11" rx="2"></rect><rect x="3" y="13" width="8" height="8" rx="2"></rect></svg>
+            <span>Overview</span>
+          </a>
+          <a class="nav-link" href="#transactions" data-page="Transactions">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h14M17 3l4 4-4 4M17 17H3m4-4-4 4 4 4"></path></svg>
+            <span>Transactions</span>
+            <span class="nav-count" id="transactionCount">5</span>
+          </a>
+          <a class="nav-link" href="#budgets" data-page="Budgets">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5m0 14h17M8 15l3-4 3 2 5-7"></path><path d="M16 6h3v3"></path></svg>
+            <span>Budgets</span>
+          </a>
+          <a class="nav-link" href="#insights" data-page="AI insights">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 1.9 5.8L20 11l-6.1 2.2L12 19l-1.9-5.8L4 11l6.1-2.2L12 3Z"></path><path d="m19 14 .9 2.1L22 17l-2.1.9L19 20l-.9-2.1L16 17l2.1-.9L19 14Z"></path></svg>
+            <span>AI insights</span>
+            <span class="ai-nav-dot"></span>
+          </a>
+        </nav>
+
+        <div class="workspace-label tools-label">YOUR MONEY</div>
+        <nav class="main-nav">
+          <a class="nav-link" href="#accounts" data-page="Accounts">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 10h18M7 15h3"></path></svg>
+            <span>Accounts</span>
+          </a>
+          <a class="nav-link" href="#goals" data-page="Savings goals">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="5"></circle><circle cx="12" cy="12" r="1"></circle></svg>
+            <span>Savings goals</span>
+          </a>
+        </nav>
+
+        <div class="sidebar-spacer"></div>
+        <div class="upgrade-card">
+          <div class="upgrade-icon">✳</div>
+          <strong>A little more clarity?</strong>
+          <p>Get your personalized money plan.</p>
+          <button class="upgrade-link" type="button" data-toast="Your personalized plan is coming soon.">Explore your plan <span>↗</span></button>
+          <div class="upgrade-spark upgrade-spark-one"></div>
+          <div class="upgrade-spark upgrade-spark-two"></div>
+        </div>
+        <nav class="main-nav bottom-nav">
+          <a class="nav-link" href="#settings" data-page="Settings">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="m19.4 15 1.2 2-2 3.5-2.3-.2a8 8 0 0 1-2 .9L13 23h-4l-.5-1.8a8 8 0 0 1-2-.9l-2.3.2-2-3.5 1.2-2a8 8 0 0 1 0-2.1l-1.2-2 2-3.5 2.3.2a8 8 0 0 1 2-.9L9 4h4l.5 1.8a8 8 0 0 1 2 .9l2.3-.2 2 3.5-1.2 2a8 8 0 0 1 .8 3Z" transform="translate(0 -1) scale(.94)"></path></svg>
+            <span>Settings</span>
+          </a>
+          <button class="profile-button" id="profileButton" type="button" aria-label="Personalize your profile">
+            <span class="avatar">AM</span>
+            <span class="profile-copy"><strong>Alex Morgan</strong><small>Local-only preview</small></span>
+            <span class="profile-more">···</span>
+          </button>
+        </nav>
+      </aside>
+
+      <main class="main-content" id="overview">
+        <header class="topbar">
+          <button class="icon-button mobile-menu-button" id="mobileMenuButton" type="button" aria-label="Open navigation">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+          </button>
+          <div class="breadcrumb"><span>Pages</span><span class="breadcrumb-slash">/</span><strong id="breadcrumbCurrent">Overview</strong></div>
+          <div class="topbar-actions">
+            <div class="search-wrap">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 4.5 4.5"></path></svg>
+              <input id="globalSearch" type="search" placeholder="Search anything..." aria-label="Search transactions" />
+              <kbd>⌘ K</kbd>
+            </div>
+            <button class="icon-button notification-button" id="notificationButton" type="button" aria-label="Notifications">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path><path d="M10 21h4"></path></svg>
+              <span class="notification-dot"></span>
+            </button>
+            <button class="icon-button save-site-button" id="saveSiteButton" type="button" aria-label="Save or install SmartSpend AI" title="Save this site">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12a1 1 0 0 1 1 1v16l-7-4-7 4V5a1 1 0 0 1 1-1Z"></path></svg>
+            </button>
+            <button class="top-avatar" id="topProfileButton" type="button" aria-label="Personalize your profile">AM</button>
+          </div>
+        </header>
+
+        <section class="page-content">
+          <div class="welcome-row">
+            <div>
+              <div class="eyebrow"><span class="live-dot"></span> YOUR PERSONAL FINANCIAL SNAPSHOT <span class="demo-badge">SAMPLE DATA</span></div>
+              <h1><span id="greetingPeriod">Good morning</span>, <span id="userName">Alex</span> <span class="wave">✳</span></h1>
+              <p class="welcome-subtitle">Here’s what’s happening with your money today.</p>
+            </div>
+            <div class="welcome-actions">
+              <button class="date-button" type="button" data-toast="Showing your overview for October 2026.">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M16 3v4M8 3v4M3 10h18"></path></svg>
+                <span id="currentMonthLabel">October 2026</span>
+                <svg class="chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"></path></svg>
+              </button>
+              <button class="primary-button" id="addExpenseButton" type="button">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+                Add expense
+              </button>
+            </div>
+          </div>
+
+          <section class="overview-grid" aria-label="Financial overview">
+            <article class="card balance-card">
+              <div class="balance-top">
+                <span class="card-label">TOTAL BALANCE</span>
+                <button class="balance-visibility" id="toggleBalance" type="button" aria-label="Hide balance" title="Toggle balance visibility">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                </button>
+              </div>
+              <div class="balance-amount" id="balanceAmount">$24,680<span>.50</span></div>
+              <div class="balance-foot">
+                <span class="positive-chip"><span>↗</span> 12.8%</span>
+                <span class="balance-comparison">vs. last month</span>
+                <div class="balance-spark" aria-hidden="true">
+                  <svg viewBox="0 0 110 34" preserveAspectRatio="none"><path d="M2 27C13 25 13 17 24 21s13-3 20-1 8-9 17-7 12-7 19-4 10-4 14-1 9-7 14-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"></path></svg>
+                </div>
+              </div>
+              <div class="balance-decoration balance-decoration-one"></div>
+              <div class="balance-decoration balance-decoration-two"></div>
+            </article>
+
+            <article class="card metric-card">
+              <div class="metric-heading"><span class="metric-icon income-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"></path></svg></span><span class="card-label">MONTHLY INCOME</span><button class="more-button" type="button" aria-label="Income options">···</button></div>
+              <div class="metric-amount">$8,420<span>.00</span></div>
+              <div class="metric-foot"><span class="positive-text">↗ 8.2%</span><span>vs. last month</span></div>
+              <div class="metric-bars income-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            </article>
+
+            <article class="card metric-card">
+              <div class="metric-heading"><span class="metric-icon expense-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7 17 17M17 7v10H7"></path></svg></span><span class="card-label">MONTHLY SPENDING</span><button class="more-button" type="button" aria-label="Spending options">···</button></div>
+              <div class="metric-amount" id="monthlySpendAmount">$3,240<span>.80</span></div>
+              <div class="metric-foot"><span class="positive-text">↓ 4.6%</span><span>vs. last month</span></div>
+              <div class="metric-bars expense-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            </article>
+
+            <article class="card metric-card savings-metric">
+              <div class="metric-heading"><span class="metric-icon savings-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v10m-3-7h4a2 2 0 1 1 0 4H9"></path></svg></span><span class="card-label">SAVED THIS MONTH</span><button class="more-button" type="button" aria-label="Savings options">···</button></div>
+              <div class="metric-amount">$2,180<span>.00</span></div>
+              <div class="metric-foot"><span class="positive-text">↗ 18.4%</span><span>of your income</span></div>
+              <div class="savings-progress"><span></span></div>
+            </article>
+          </section>
+
+          <section class="middle-grid" aria-label="Spending analytics">
+            <article class="card spending-card" id="insights">
+              <div class="section-heading">
+                <div><h2>Spending overview</h2><p>Track where your money goes</p></div>
+                <div class="range-switch" role="group" aria-label="Chart time range">
+                  <button class="range-button" type="button" data-range="Week">Week</button>
+                  <button class="range-button active" type="button" data-range="Month">Month</button>
+                  <button class="range-button" type="button" data-range="Year">Year</button>
+                </div>
+              </div>
+              <div class="chart-summary"><div><span class="chart-sum-label">TOTAL SPENT</span><strong id="chartTotal">$3,240.80</strong></div><span class="chart-period" id="chartPeriod"><span>↓ 4.6%</span> from last month</span></div>
+              <div class="chart-legend"><span><i class="legend-dot spending-dot"></i> This month</span><span><i class="legend-dot previous-dot"></i> Last month</span></div>
+              <div class="chart-wrap">
+                <div class="y-axis-labels" aria-hidden="true"><span>$4k</span><span>$3k</span><span>$2k</span><span>$1k</span><span>$0</span></div>
+                <div class="chart-plot">
+                  <div class="chart-gridlines" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+                  <svg id="spendingChart" viewBox="0 0 700 190" preserveAspectRatio="none" role="img" aria-label="Spending was lower than the previous month across most weeks">
+                    <defs><linearGradient id="chartFill" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#64856c" stop-opacity=".17"></stop><stop offset="100%" stop-color="#64856c" stop-opacity="0"></stop></linearGradient></defs>
+                    <path class="chart-previous-area" d="M0 102 C45 91 50 64 99 72 S155 92 199 55 S259 39 299 52 S359 86 399 47 S459 20 499 40 S559 69 599 31 S659 37 700 16 L700 190 L0 190Z"></path>
+                    <path class="chart-current-area" id="currentArea" d="M0 122 C45 106 56 120 99 99 S158 111 199 88 S260 67 299 81 S360 103 399 68 S458 77 499 67 S558 83 599 55 S660 61 700 44 L700 190 L0 190Z"></path>
+                    <path class="chart-previous-line" id="previousLine" d="M0 102 C45 91 50 64 99 72 S155 92 199 55 S259 39 299 52 S359 86 399 47 S459 20 499 40 S559 69 599 31 S659 37 700 16"></path>
+                    <path class="chart-current-line" id="currentLine" d="M0 122 C45 106 56 120 99 99 S158 111 199 88 S260 67 299 81 S360 103 399 68 S458 77 499 67 S558 83 599 55 S660 61 700 44"></path>
+                    <circle class="chart-highlight" cx="499" cy="67" r="5"></circle>
+                  </svg>
+                  <div class="x-axis-labels" id="xAxisLabels" aria-hidden="true"><span>Oct 1</span><span>Oct 5</span><span>Oct 10</span><span>Oct 15</span><span>Oct 20</span><span>Oct 25</span><span>Oct 31</span></div>
+                </div>
+              </div>
+            </article>
+
+            <article class="card categories-card" id="budgets">
+              <div class="section-heading category-heading"><div><h2>Top categories</h2><p>Your biggest spends this month</p></div><button class="text-button" type="button" data-toast="Your full category breakdown is ready to explore.">See all <span>→</span></button></div>
+              <div class="donut-layout">
+                <div class="donut-chart" id="categoryDonut" role="img" aria-label="Category spending: Food 38 percent, Shopping 26 percent, Transport 19 percent, Others 17 percent"><div class="donut-hole"><strong id="categoryDonutTotal">$3,240</strong><span>TOTAL SPENT</span></div></div>
+                <div class="donut-legend">
+                  <div><i class="category-dot category-food"></i><span>Food & dining</span><strong data-category-total="food">$1,238</strong></div>
+                  <div><i class="category-dot category-shopping"></i><span>Shopping</span><strong data-category-total="shopping">$842</strong></div>
+                  <div><i class="category-dot category-transport"></i><span>Transport</span><strong data-category-total="transport">$616</strong></div>
+                  <div><i class="category-dot category-other"></i><span>Others</span><strong data-category-total="other">$545</strong></div>
+                </div>
+              </div>
+              <div class="category-tip"><span class="tip-spark">✳</span><span>Dining is <strong>12% lower</strong> than your monthly average. Nice work!</span><button type="button" aria-label="Dismiss insight" id="dismissTip">×</button></div>
+            </article>
+          </section>
+
+          <section class="bottom-grid">
+            <article class="card transactions-card" id="transactions">
+              <div class="section-heading transaction-heading"><div><h2>Recent transactions</h2><p>Your latest money moves</p></div><button class="text-button" id="allTransactionsButton" type="button">View all <span>→</span></button></div>
+              <div class="transaction-table-wrap">
+                <table class="transaction-table">
+                  <thead><tr><th>NAME</th><th>CATEGORY</th><th>DATE</th><th>AMOUNT</th><th></th></tr></thead>
+                  <tbody id="transactionRows">
+                    <tr data-search="whole foods market food dining groceries"><td><span class="transaction-name"><span class="merchant-icon whole-foods">w</span><span><strong>Whole Foods Market</strong><small>•••• 4829</small></span></span></td><td><span class="category-pill food-pill">Food & dining</span></td><td class="date-cell">Oct 11, 2026</td><td class="amount-cell">−$84.32</td><td><button class="row-more" type="button" aria-label="Whole Foods transaction options" data-toast="Whole Foods Market · Oct 11, 2026 · $84.32">···</button></td></tr>
+                    <tr data-search="uber trip transportation travel"><td><span class="transaction-name"><span class="merchant-icon uber-icon">U</span><span><strong>Uber</strong><small>•••• 2190</small></span></span></td><td><span class="category-pill transport-pill">Transport</span></td><td class="date-cell">Oct 10, 2026</td><td class="amount-cell">−$18.50</td><td><button class="row-more" type="button" aria-label="Uber transaction options" data-toast="Uber · Oct 10, 2026 · $18.50">···</button></td></tr>
+                    <tr data-search="spotify premium entertainment subscription"><td><span class="transaction-name"><span class="merchant-icon spotify-icon">◉</span><span><strong>Spotify Premium</strong><small>•••• 4829</small></span></span></td><td><span class="category-pill entertainment-pill">Entertainment</span></td><td class="date-cell">Oct 09, 2026</td><td class="amount-cell">−$10.99</td><td><button class="row-more" type="button" aria-label="Spotify transaction options" data-toast="Spotify Premium · Oct 09, 2026 · $10.99">···</button></td></tr>
+                    <tr data-search="monthly salary paycheck income direct deposit"><td><span class="transaction-name"><span class="merchant-icon salary-icon">↙</span><span><strong>Monthly salary</strong><small>•••• 4829</small></span></span></td><td><span class="category-pill income-pill">Income</span></td><td class="date-cell">Oct 08, 2026</td><td class="amount-cell income-amount">+$4,200.00</td><td><button class="row-more" type="button" aria-label="Salary transaction options" data-toast="Monthly salary · Oct 08, 2026 · $4,200.00">···</button></td></tr>
+                    <tr data-search="amazon shopping online retail"><td><span class="transaction-name"><span class="merchant-icon amazon-icon">a</span><span><strong>Amazon</strong><small>•••• 2190</small></span></span></td><td><span class="category-pill shopping-pill">Shopping</span></td><td class="date-cell">Oct 07, 2026</td><td class="amount-cell">−$62.48</td><td><button class="row-more" type="button" aria-label="Amazon transaction options" data-toast="Amazon · Oct 07, 2026 · $62.48">···</button></td></tr>
+                  </tbody>
+                </table>
+                <div class="empty-search" id="emptySearch" hidden>No transactions found. Try a different search.</div>
+              </div>
+            </article>
+
+            <article class="card ai-card">
+              <div class="ai-heading"><span class="ai-star">✳</span><div><span class="ai-eyebrow">YOUR SMARTSPEND MONEY COACH</span><span class="ai-powered">SMARTSPEND INTELLIGENCE · PREVIEW</span></div><span class="ai-live"><i></i> LIVE</span></div>
+              <h2>A smarter move, just for you.</h2>
+              <p class="ai-copy">You’re spending less on dining this month. Move that extra <strong>$148</strong> toward your travel goal and you’ll hit it <strong>2 weeks sooner.</strong></p>
+              <div class="ai-recommendation"><div class="recommendation-icon">✈</div><span><small>TRAVEL FUND</small><strong>+ $148.00</strong></span><span class="recommendation-arrow">↗</span></div>
+              <button class="ai-action" type="button" id="aiActionButton">Explore this idea <span>→</span></button>
+              <span class="ai-footnote">Illustrative suggestion from sample data · Not financial advice</span>
+              <div class="ai-glow"></div>
+            </article>
+          </section>
+          <footer class="page-footer"><span>Your money stays yours. This demo saves your entries in this browser.</span><span><i></i> <span id="saveStatus">Demo · local only</span></span></footer>
+        </section>
+      </main>
+    </div>
+
+    <div class="modal-backdrop" id="expenseModal" hidden>
+      <section class="expense-modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-heading"><div><span class="modal-kicker">KEEP YOUR MONEY IN FOCUS</span><h2 id="modalTitle">Add an expense</h2></div><button class="modal-close" id="closeModalButton" type="button" aria-label="Close">×</button></div>
+        <form id="expenseForm">
+          <label class="form-label" for="expenseName">What did you spend on?</label>
+          <input class="form-input" id="expenseName" name="name" type="text" placeholder="e.g. Coffee with friends" maxlength="48" required />
+          <div class="form-row">
+            <div><label class="form-label" for="expenseAmount">Amount</label>            <div class="amount-input-wrap"><span id="amountCurrencySymbol">$</span><input class="form-input" id="expenseAmount" name="amount" type="number" min="0.01" max="999999.99" step="0.01" placeholder="0.00" required /></div></div>
+            <div><label class="form-label" for="expenseCategory">Category</label><select class="form-input" id="expenseCategory" name="category"><option>Food & dining</option><option>Shopping</option><option>Transport</option><option>Entertainment</option><option>Health</option><option>Other</option></select></div>
+          </div>
+          <label class="form-label" for="expenseDate">Date</label>
+          <input class="form-input" id="expenseDate" name="date" type="date" required />
+          <div class="form-error" id="formError" role="alert" hidden></div>
+          <button class="primary-button submit-expense" type="submit">Add to transactions <span>→</span></button>
+        </form>
+        <p class="modal-privacy"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"></rect><path d="M8 10V7a4 4 0 1 1 8 0v3"></path></svg> Your financial data stays private and secure.</p>
+      </section>
+    </div>
+    <div class="modal-backdrop" id="profileModal" hidden>
+      <section class="expense-modal" role="dialog" aria-modal="true" aria-labelledby="profileModalTitle">
+        <div class="modal-heading"><div><span class="modal-kicker">YOUR PRIVATE WORKSPACE</span><h2 id="profileModalTitle">Make it yours</h2></div><button class="modal-close" id="closeProfileModalButton" type="button" aria-label="Close">×</button></div>
+        <form id="profileForm">
+          <label class="form-label" for="profileName">What should we call you?</label>
+          <input class="form-input" id="profileName" name="name" type="text" maxlength="32" placeholder="Your name" required />
+          <label class="form-label" for="profileCurrency">Preferred currency</label>
+          <select class="form-input" id="profileCurrency" name="currency">
+            <option value="USD">US dollar · USD ($)</option>
+            <option value="EUR">Euro · EUR (€)</option>
+            <option value="GBP">British pound · GBP (£)</option>
+            <option value="INR">Indian rupee · INR (₹)</option>
+            <option value="CAD">Canadian dollar · CAD ($)</option>
+            <option value="AUD">Australian dollar · AUD ($)</option>
+          </select>
+          <p class="settings-note">Your profile and transactions are stored in this browser only. There is no account or bank connection.</p>
+          <button class="primary-button submit-expense" type="submit">Save preferences <span>→</span></button>
+        </form>
+        <p class="modal-privacy"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"></rect><path d="M8 10V7a4 4 0 1 1 8 0v3"></path></svg> Private by default. Your data stays on this device.</p>
+      </section>
+    </div>
+    <div class="toast-container" id="toastContainer" aria-live="polite" aria-atomic="true"></div>
+  </body>
+</html>
